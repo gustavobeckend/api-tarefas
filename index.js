@@ -1,5 +1,5 @@
-const express = require('express');
-const tarefasRouter = require('./routes/tarefas.js');
+import express from 'express';
+import { tarefasRouter } from './routes/tarefas.js';
 
 const app = express();
 const port = 3000;

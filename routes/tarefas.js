@@ -1,7 +1,7 @@
-const express = require('express');
-const validaData = require("../middleware/validaData.js");
-const validaTitulo = require("../middleware/validaTitulo.js");
-const processamento = require("../async/delay.js");
+import express from 'express';
+import validaData from "../middleware/validaData.js";
+import validaTitulo from "../middleware/validaTitulo.js";
+import processamento from "../async/delay.js";
 
 const router = express.Router();
 router.use(express.json());
@@ -17,7 +17,6 @@ router.get("/", processamento, (req, res) => {
         const tarefasConcluidas = titulos.filter(t => t.concluido === Boolean(status));
         return res.json(tarefasConcluidas);
     }
-    
     res.json(titulos);
 })
 
@@ -42,4 +41,4 @@ router.delete("/:id", (req, res) => {
     res.json(deltitle[0]);
 })
 
-module.exports = router;
+export const tarefasRouter = router;

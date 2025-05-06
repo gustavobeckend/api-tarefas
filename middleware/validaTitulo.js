@@ -1,4 +1,4 @@
-module.exports = function validaTitulo (req, res, next) {
+export default function validaTitulo (req, res, next) {
     const { title } = req.body;
 
     if (!title || typeof title !== 'string') {
