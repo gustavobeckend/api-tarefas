@@ -7,10 +7,11 @@ let titulos = [];
 let currentId = 1;
 
 router.get("/", (req, res) => {
-    const status = req.query.status;
+    const { status } = req.query;
 
-    if (status === 'concluida') {
-        const tarefasConcluidas = titulos.filter(t => t.concluido === true);
+    if (status !== undefined) {
+        const statusBool = status == 'true';
+        const tarefasConcluidas = titulos.filter(t => t.concluido === statusBool);
         return res.json(tarefasConcluidas);
     }
     res.json(titulos);
@@ -18,6 +19,9 @@ router.get("/", (req, res) => {
 
 router.post("/", (req, res) => {
     const titulo = { id: currentId++, title: req.body.title, concluido: req.body.concluido};
+    if (!titulo.title || typeof titulo.title !== 'string') {
+        return res.status(400).json({ erro: "O campo título é obrigatório e tem que ser texto"});
+    }
     titulos.push(titulo);
     res.status(201).json(titulo);
 })
