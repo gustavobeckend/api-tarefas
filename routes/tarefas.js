@@ -1,6 +1,7 @@
 const express = require('express');
 const validaData = require("../middleware/validaData.js");
 const validaTitulo = require("../middleware/validaTitulo.js");
+const processamento = require("../async/delay.js");
 
 const router = express.Router();
 router.use(express.json());
@@ -9,13 +10,14 @@ router.use(validaData);
 let titulos = [];
 let currentId = 1;
 
-router.get("/", (req, res) => {
+router.get("/", processamento, (req, res) => {
     const { status } = req.query;
 
     if (status) {
         const tarefasConcluidas = titulos.filter(t => t.concluido === Boolean(status));
         return res.json(tarefasConcluidas);
     }
+    
     res.json(titulos);
 })
 
