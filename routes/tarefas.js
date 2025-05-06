@@ -9,9 +9,8 @@ let currentId = 1;
 router.get("/", (req, res) => {
     const { status } = req.query;
 
-    if (!status) {
-        const statusBool = status == 'true';
-        const tarefasConcluidas = titulos.filter(t => t.concluido === statusBool);
+    if (status) {
+        const tarefasConcluidas = titulos.filter(t => t.concluido === Boolean(status));
         return res.json(tarefasConcluidas);
     }
     res.json(titulos);
