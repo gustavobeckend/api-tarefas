@@ -1,7 +1,10 @@
-const express = require("express");
-const router = express.Router();
+const express = require('express');
+const validaData = require("../middleware/validaData.js");
+const validaTitulo = require("../middleware/validaTitulo.js");
 
+const router = express.Router();
 router.use(express.json());
+router.use(validaData);
 
 let titulos = [];
 let currentId = 1;
@@ -16,13 +19,11 @@ router.get("/", (req, res) => {
     res.json(titulos);
 })
 
-router.post("/", (req, res) => {
-    const titulo = { id: currentId++, title: req.body.title, concluido: req.body.concluido};
-    if (!titulo.title || typeof titulo.title !== 'string') {
-        return res.status(400).json({ erro: "O campo título é obrigatório e tem que ser texto"});
-    }
-    titulos.push(titulo);
-    res.status(201).json(titulo);
+router.post("/", validaTitulo, (req, res) => {
+    const { title, concluido } = req.body;
+    const newTitle = { id: currentId++, title, concluido};
+    titulos.push(newTitle);
+    res.status(201).json(newTitle);
 })
 
 router.put("/:id", (req, res) => {

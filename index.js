@@ -1,11 +1,12 @@
-const express = require("express");
+const express = require('express');
+const tarefasRouter = require('./routes/tarefas.js');
+
 const app = express();
-const tarefasRouter = require("./routes/tarefas");
+const port = 3000;
 
 app.use(express.json());
 app.use("/tarefas", tarefasRouter);
 
-const port = 3000;
 app.listen(port, () => {
     console.log(`Iniciando a conexão com a porta: ${port}`);
 });
